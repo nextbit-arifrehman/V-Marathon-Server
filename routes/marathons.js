@@ -67,25 +67,25 @@ router.post('/', verifyJWT, async (req, res) => {
   }
 });
 
-// // ✅ 🔒 Update marathon
-// router.patch('/:id', verifyJWT, async (req, res) => {
-//   try {
-//     const updated = req.body;
-//     const marathonCollection = req.app.locals.marathonCollection;
+// ✅ 🔒 Update marathon
+router.patch('/:id', verifyJWT, async (req, res) => {
+  try {
+    const updated = req.body;
+    const marathonCollection = req.app.locals.marathonCollection;
 
-//     const result = await marathonCollection.updateOne(
-//       { _id: new ObjectId(req.params.id) },
-//       { $set: updated }
-//     );
+    const result = await marathonCollection.updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: updated }
+    );
 
-//     if (result.matchedCount === 0)
-//       return res.status(404).send({ message: 'Marathon not found' });
+    if (result.matchedCount === 0)
+      return res.status(404).send({ message: 'Marathon not found' });
 
-//     res.send(result);
-//   } catch (error) {
-//     res.status(500).send({ message: 'Failed to update marathon', error });
-//   }
-// });
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ message: 'Failed to update marathon', error });
+  }
+});
 
 // ✅ 🔒 Delete marathon
 router.delete('/:id', verifyJWT, async (req, res) => {
