@@ -8,18 +8,18 @@ router.get('/public/featured', async (req, res) => {
   try {
     const marathonCollection = req.app.locals.marathonCollection;
 
-    const featuredMarathons = await marathonCollection
-      .find({})
-      .sort({ createdAt: -1 })
-      .limit(6)
-      .toArray();
+//     const featuredMarathons = await marathonCollection
+//       .find({})
+//       .sort({ createdAt: -1 })
+//       .limit(6)
+//       .toArray();
 
-    res.send(featuredMarathons);
-  } catch (error) {
-    console.error('GET /api/marathons/public/featured error:', error);
-    res.status(500).send({ message: 'Failed to fetch featured marathons', error });
-  }
-});
+//     res.send(featuredMarathons);
+//   } catch (error) {
+//     console.error('GET /api/marathons/public/featured error:', error);
+//     res.status(500).send({ message: 'Failed to fetch featured marathons', error });
+//   }
+// });
 
 // ✅ 🔒 Get all marathons (private, JWT required)
 router.get('/', verifyJWT, async (req, res) => {
