@@ -3,16 +3,16 @@ const verifyJWT = require('../middlewares/verifyJWT');
 
 const router = express.Router();
 
-router.get('/stats/dashboard-stats', verifyJWT, async (req, res) => {
-  try {
-    const marathonColl = req.app.locals.marathonCollection;
-    const applyColl = req.app.locals.applyCollection;
+// router.get('/stats/dashboard-stats', verifyJWT, async (req, res) => {
+//   try {
+//     const marathonColl = req.app.locals.marathonCollection;
+//     const applyColl = req.app.locals.applyCollection;
 
-    const marathonCount = await marathonColl.countDocuments();
-    const applicationCount = await applyColl.countDocuments();
-    const upcomingCount = await marathonColl.countDocuments({
-      marathonStartDate: { $gt: new Date() }
-    });
+//     const marathonCount = await marathonColl.countDocuments();
+//     const applicationCount = await applyColl.countDocuments();
+//     const upcomingCount = await marathonColl.countDocuments({
+//       marathonStartDate: { $gt: new Date() }
+//     });
 
     // ✅ Aggregate total registrations across all marathons
     const [{ totalRegistrations = 0 }] = await marathonColl.aggregate([

@@ -3,30 +3,30 @@ const { ObjectId } = require('mongodb');
 const verifyJWT = require('../middlewares/verifyJWT');
 const router = express.Router();
 
-// // Apply for marathon (with duplicate check)
-// router.post('/', verifyJWT, async (req, res) => {
-//   try {
-//     const data = req.body;
-//     data.createdAt = new Date();
+// Apply for marathon (with duplicate check)
+router.post('/', verifyJWT, async (req, res) => {
+  try {
+    const data = req.body;
+    data.createdAt = new Date();
 
-//     // 🔁 Prevent duplicate application
-//     const existing = await req.app.locals.applyCollection.findOne({
-//       email: data.email,
-//       marathonId: data.marathonId
-//     });
+    // 🔁 Prevent duplicate application
+    const existing = await req.app.locals.applyCollection.findOne({
+      email: data.email,
+      marathonId: data.marathonId
+    });
     
-//     if (existing) {
-//       return res.status(400).send({ message: 'You have already applied for this marathon.' });
-//     }
+    if (existing) {
+      return res.status(400).send({ message: 'You have already applied for this marathon.' });
+    }
 
-//     // ✅ Insert new application
-//     const result = await req.app.locals.applyCollection.insertOne(data);
+    // ✅ Insert new application
+    const result = await req.app.locals.applyCollection.insertOne(data);
 
-//     // ✅ Increment total registration
-//     await req.app.locals.marathonCollection.updateOne(
-//       { _id: new ObjectId(data.marathonId) },
-//       { $inc: { totalRegistration: 1 } }
-//     );
+    // ✅ Increment total registration
+    await req.app.locals.marathonCollection.updateOne(
+      { _id: new ObjectId(data.marathonId) },
+      { $inc: { totalRegistration: 1 } }
+    );
 
     res.send(result);
   } catch (err) {
