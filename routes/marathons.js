@@ -21,21 +21,21 @@ router.get('/public/featured', async (req, res) => {
   }
 });
 
-// ✅ 🔒 Get all marathons (private, JWT required)
-router.get('/', verifyJWT, async (req, res) => {
-  try {
-    const marathonCollection = req.app.locals.marathonCollection;
-    const { sort, location } = req.query;
+// // ✅ 🔒 Get all marathons (private, JWT required)
+// router.get('/', verifyJWT, async (req, res) => {
+//   try {
+//     const marathonCollection = req.app.locals.marathonCollection;
+//     const { sort, location } = req.query;
 
-    const query = location ? { location: { $regex: location, $options: 'i' } } : {};
-    const sortOption = sort === 'oldest' ? { createdAt: 1 } : { createdAt: -1 };
+//     const query = location ? { location: { $regex: location, $options: 'i' } } : {};
+//     const sortOption = sort === 'oldest' ? { createdAt: 1 } : { createdAt: -1 };
 
-    const result = await marathonCollection.find(query).sort(sortOption).toArray();
-    res.send(result);
-  } catch (error) {
-    res.status(500).send({ message: 'Failed to fetch marathons', error });
-  }
-});
+//     const result = await marathonCollection.find(query).sort(sortOption).toArray();
+//     res.send(result);
+//   } catch (error) {
+//     res.status(500).send({ message: 'Failed to fetch marathons', error });
+//   }
+// });
 
 // ✅ 🔒 Get single marathon details
 router.get('/:id', verifyJWT, async (req, res) => {
